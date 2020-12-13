@@ -1,2 +1,5 @@
 # electric-mouse
- Phaser.JS game
+
+Phaser.JS game
+
+Credits to Codecademy.com
