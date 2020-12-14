@@ -60,7 +60,7 @@ class GameScene extends Phaser.Scene {
     // Add the player object below:
     gameState.player = {
       name: 'Electric Mouse',
-      health: 45,
+      health: 50,
       frames: [{
         key: 'playerIdle',
         start: 0,
@@ -85,7 +85,7 @@ class GameScene extends Phaser.Scene {
 
     gameState.opponents = [{
       name: 'Owl',
-      health: 10,
+      health: 12,
       frames: [{
         key: 'OwlIdle',
         start: 0,
@@ -110,7 +110,7 @@ class GameScene extends Phaser.Scene {
     },
     {
       name: 'Red Owl',
-      health: 12,
+      health: 16,
       frames: [{
         key: 'Red OwlIdle',
         start: 0,
@@ -135,7 +135,7 @@ class GameScene extends Phaser.Scene {
     },
     {
       name: 'Blue Owl',
-      health: 15,
+      health: 20,
       frames: [{
         key: 'Blue OwlIdle',
         start: 0,
@@ -160,7 +160,7 @@ class GameScene extends Phaser.Scene {
     },
     {
       name: 'Psychic Hairless Cat',
-      health: 30,
+      health: 40,
       frames: [{
         key: 'Psychic Hairless CatIdle',
         start: 0,
@@ -186,7 +186,7 @@ class GameScene extends Phaser.Scene {
     ];
 
     // Set the current opponent below:
-    gameState.opponents[0] = gameState.computer;
+    gameState.computer = gameState.opponents[0];
 
     // Adds in the background
     this.add.sprite(240, 320, 'Background').setScale(.5);
@@ -236,14 +236,14 @@ class GameScene extends Phaser.Scene {
 
     // Add your information text and styling below: 
     const style = {
-      font: '16px Helvetica',
+      font: '14px Helvetica',
       fill: '#000000',
-      padding: {x:6, y:7}
+      padding: {x:5, y:6}
     };
-    gameState.playMove = this.add.text(65, 140, '', style);
+    gameState.playerMove = this.add.text(65, 140, '', style);
 
     gameState.computerMove = this.add.text(320, 140, '', style);
-    gameState.information = this.add.text(140, 80, '', style);
+    gameState.information = this.add.text(80, 380, '', style);
 
     gameState.playerHealthBar = this.add.text(45, 45, `HP: ${gameState.player.health}`, style);
     gameState.computerHealthBar = this.add.text(375, 45, `HP: ${gameState.computer.health}`, style); 
@@ -289,7 +289,7 @@ class GameScene extends Phaser.Scene {
         } 
       }
     });
-    
+
     // Defend button logic:
     gameState.defendButton.on('pointerup', () => {
       this.pauseIdle()
@@ -310,9 +310,11 @@ class GameScene extends Phaser.Scene {
           case 1:
             gameState.playerMove.text = 'Defend!';
             gameState.computerMove.text = 'Defend!';
+            gameState.player.health += 10;
+            gameState.computer.health += 10;
             gameState.playerHealthBar.text = `HP: ${gameState.player.health}`;
             gameState.computerHealthBar.text = `HP: ${gameState.computer.health}`;
-            gameState.information.text = 'Both defended, no harm done!'
+            gameState.information.text = 'Both defended and earned 10 HP!'
             gameState.player.sprite.anims.play('playerDefense');
             gameState.computerSprite.anims.player(gameState.computer.name + 'Defense');
             break;
